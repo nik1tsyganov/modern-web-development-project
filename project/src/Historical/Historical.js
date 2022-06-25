@@ -1,3 +1,5 @@
+
+
 function getUsers() {
     const axios = window.axios;
     return axios.get("figure.json").then((response) => {
