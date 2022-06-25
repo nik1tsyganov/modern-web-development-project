@@ -9,7 +9,7 @@ function Parent() {
   }
   /* calls child function on child click */
   return (
-    <div class="app">
+    <div className="app">
       <Child data="Submit" onChildClick="{clickAlert}" />
     </div>
   );
