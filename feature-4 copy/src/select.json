@@ -1,0 +1,24 @@
+{
+    "page": 1,
+    "per_page": 4,
+    "total": 12,
+    "total_pages": 1,
+    "data": [
+      {
+        "id": 1,
+        "name": "Amazing"
+      },
+      {
+        "id": 2,
+        "name": "Great"
+      },
+      {
+        "id": 3,
+        "name": "Okay"
+      },
+      {
+        "id": 4,
+        "name": "I don't like them"
+      }
+    ]
+  }
