@@ -33,6 +33,12 @@ const RateView = () => {
     const onClickHandler = (e) => {
       e.preventDefault();
       setAdd(true);
+    };
+
+    const onChangeHandler = (e) => {
+      e.preventDefault();
+      console.log(e.target.value);
+      // Continuously updating name to be added on submit
       setName(e.target.value);
     };
   
@@ -40,12 +46,12 @@ const RateView = () => {
     <div>
         <p>How do you like this website?</p>
         <div>
-            <form className="rating">
+            <form className="rating" onSubmit={onClickHandler} onChange={onChangeHandler}>
               <select className="rate-pets">
                   {ratings.map((rating) => (
                     <option value={rating.get("name")}>{rating.get("name")}</option>))}
               </select>
-              <RateForm onClick={onClickHandler} />
+              <button type="submit">Submit</button>
             </form>
         </div>
     </div>
