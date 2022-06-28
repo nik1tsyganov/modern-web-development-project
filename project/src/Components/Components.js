@@ -4,7 +4,6 @@ import RateModule from "./Rate/RateMain.js";
 
 const Components = () => {
   return (
-    
     <div>
       <SelectModule />
       <RateModule />
