@@ -50,18 +50,16 @@ const SelectView = () => {
             <img src={Image} alt="Agamemnon" width="275" height="300" />
         </div>
         <div>
-            <form className="select">
+            <form className="select" onClick={onClickHandler} onChange={onChangeHandler}>
                 {historicals.length > 0 && (
-                  <div className="radioChoice">
-                    {historicals.map((historical) => (
+                  historicals.map((historical) => (
                       <input
                           type="radio"
                           key="{historical}"
                           name="historical_figure"
                           value={historical.get("name")}
                       />
-                  ))}
-                </div>)}
+                  )))}
             </form>
         </div>
         <p>Write in your own:</p>
