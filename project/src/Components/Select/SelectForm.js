@@ -1,12 +1,31 @@
 import React from "react";
 
 /* STATELESS CHILD COMPONENT */
-const SelectForm = ({ onChange, onClick }) => {
+const SelectRadioForm = ({ historicals, onChangeForm, onSubmitForm }) => {
+  return (
+    <div>
+      <form className="select" onClick={onSubmitForm} onChange={onChangeForm}>
+        {historicals.length > 0 && (
+          historicals.map((historical) => (
+            <label>
+               <input
+                  type="radio"
+                  key={historical.id}
+                  name="historical_figure"
+                  value={historical.attributes.name}
+                />{historical.get("name")}
+            </label>)))}
+        </form>
+    </div>
+  );
+};
+
+const TextForm = ({ onChangeForm, onSubmitForm }) => {
   return (
     <div>
       <form>
-        <input text="test" onChange={onChange} />
-        <button type="submit" onClick={onClick}>
+        <input text="test" onChange={onChangeForm} />
+        <button type="submit" onClick={onSubmitForm}>
           Submit
         </button>
       </form>
@@ -14,4 +33,4 @@ const SelectForm = ({ onChange, onClick }) => {
   );
 };
 
-export default SelectForm;
+export {TextForm, SelectRadioForm};
