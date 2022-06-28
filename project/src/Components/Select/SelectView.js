@@ -3,7 +3,7 @@ import {
   getAllHistoricals
 } from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/SelectService";
 import {createUserResponse} from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/CreateService";
-import SelectForm from "./SelectForm";
+import {TextForm, SelectRadioForm} from "./SelectForm";
 import Image from "../../Images/Agamemnon.jpg";
 
 
@@ -50,22 +50,10 @@ const SelectView = () => {
             <img src={Image} alt="Agamemnon" width="275" height="300" />
         </div>
         <div>
-            <form className="select" onClick={onClickHandler} onChange={onChangeHandler}>
-                {historicals.length > 0 && (
-                  historicals.map((historical) => (
-                    <label>
-                      <input
-                          type="radio"
-                          key={historical.id}
-                          name="historical_figure"
-                          value={historical.attributes.name}
-                      />{historical.get("name")}
-                    </label>
-                  )))}
-            </form>
+            <SelectRadioForm historicals={historicals} onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
         </div>
         <p>Write in your own:</p>
-        <SelectForm onClick={onClickHandler} onChange={onChangeHandler} />
+            <TextForm onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
         <br />
     </div>
     );

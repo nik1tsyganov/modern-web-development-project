@@ -46,14 +46,7 @@ const RateView = () => {
     <div>
         <p>How do you like this website?</p>
         <div>
-            <form className="rating" onSubmit={onClickHandler} onChange={onChangeHandler}>
-              <select className="rate-pets">
-                  {ratings.length > 0 && (ratings.map((rating) => (
-                    <option key={rating.id} value={rating.get("name")}>{rating.get("name")}</option>)))}
-              </select>
-              <RateForm onSubmit={onClickHandler} />
-              {/* <button type="submit">Submit</button> */}
-            </form>
+          <RateForm ratings={ratings} onFormSubmit={onClickHandler} onFormChange={onChangeHandler}/>
         </div>
     </div>
     );
