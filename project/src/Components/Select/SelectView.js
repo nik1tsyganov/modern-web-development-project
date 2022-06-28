@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
-  createHistorical,
   getAllHistoricals
 } from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/SelectService";
+import {createUserResponse} from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/CreateService";
 import SelectForm from "./SelectForm";
+import Image from "../../Images/Agamemnon.jpg";
 
 
 const SelectView = () => {
-    // Variables in the state to hold data
+
     const [historicals, setHistoricals] = useState([]);
+    const [userResponses, setUserResponses] = useState([]);
     const [name, setName] = useState();
   
-    // UseEffect to run when the page loads to
-    // obtain async data and render
     useEffect(() => {
       getAllHistoricals().then((historicals) => {
         console.log(historicals);
@@ -20,46 +20,35 @@ const SelectView = () => {
       });
     }, []);
   
-    // Flags in the state to watch for add/remove updates
     const [add, setAdd] = useState(false);
   
-    // UseEffect that runs when changes
-    // are made to the state variables/flags
+
     useEffect(() => {
-      // Check for add flag and make sure name state variable is defined
       if (name && add) {
-        createHistorical(name).then((newHistorical) => {
+        createUserResponse(name).then((userResponse) => {
           setAdd(false);
-          // Add the newly created lesson to the lessons array
-          // to render the new list of lessons (thru spread/concatination)
-          setHistoricals([...historicals, newHistorical]);
-  
-          //Note: CANNOT MANIPULATE STATE ARRAY DIRECTLY
-          //lessons = lessons.push(lesson)
-          //setLessons(lessons)
+          setUserResponses([...userResponses, userResponse]);
         });
       }
-    }, [name, historicals, add]);
+    }, [name, userResponses, add]);
   
-    // Handler to handle event passed from child submit button
     const onClickHandler = (e) => {
       e.preventDefault();
-      // Trigger add flag to create lesson and
-      // re-render list with new lesson
       setAdd(true);
     };
-  
-    // Handler to track changes to the child input text
+
     const onChangeHandler = (e) => {
       e.preventDefault();
       console.log(e.target.value);
-      // Continuously updating name to be added on submit
       setName(e.target.value);
     };
   
     return (
     <div>
         <h1 className="head">Pick the historical figure</h1>
+        <div>
+            <img src={Image} alt="Agamemnon" width="275" height="300" />
+        </div>
         <div>
             <form className="select">
                 {historicals.length > 0 && (
