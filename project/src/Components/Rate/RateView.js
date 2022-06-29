@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   getAllRatings
-} from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/RateService";
-import {createUserResponse} from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/CreateService";
+} from "../../Common/Services/RateService";
+import {createUserResponse} from "../../Common/Services/CreateService";
 import RateForm from "./RateForm";
 
 
@@ -53,4 +53,3 @@ const RateView = () => {
   };
   
   export default RateView;
-
