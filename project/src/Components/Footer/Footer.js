@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/* Adds links that allow the user to navigate between pages*/
 const Footer = () => (
   <footer>
     <nav>
