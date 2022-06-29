@@ -9,7 +9,6 @@ const RateForm = ({ratings, onFormSubmit, onFormChange }) => {
                   {ratings.length > 0 && (ratings.map((rating) => (
                     <option key={rating.id} value={rating.get("name")}>{rating.get("name")}</option>)))}
               </select>
-              {/* <RateForm onSubmit={onClickHandler} /> */}
               <button type="submit">Submit</button>
       </form>
     </div>
