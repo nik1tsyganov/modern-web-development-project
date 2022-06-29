@@ -4,7 +4,8 @@ import Home from "./Home/Home";
 import Footer from "./Footer/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
+/* Footer allows user to navigate between pages, navigation
+  done using routes for routing between links */
 const Components = () => {
   return (
     <Router>
