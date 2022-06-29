@@ -8,6 +8,8 @@ const Historical = () => {
     <div>
       <SelectModule />
       <RateModule />
+      <br />
+      <p>Where would you like to go next?</p>
     </div>
   );
 };
