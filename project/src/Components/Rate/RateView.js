@@ -37,8 +37,6 @@ const RateView = () => {
 
     const onChangeHandler = (e) => {
       e.preventDefault();
-      console.log(e.target.value);
-      // Continuously updating name to be added on submit
       setName(e.target.value);
     };
   
@@ -48,6 +46,9 @@ const RateView = () => {
         <div>
           <RateForm ratings={ratings} onFormSubmit={onClickHandler} onFormChange={onChangeHandler}/>
         </div>
+        {/* This is for the footer on this page */}
+        <br />
+        <p>Where would you like to go next?</p>
     </div>
     );
   };
