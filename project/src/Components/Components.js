@@ -1,13 +1,23 @@
 import React from "react";
-import SelectModule from "./Select/SelectMain.js";
-import RateModule from "./Rate/RateMain.js";
+import Historical from "./Historical/Historical";
+import Home from "./Home/Home";
+import Footer from "./Footer/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 const Components = () => {
   return (
-    <div>
-      <SelectModule />
-      <RateModule />
-    </div>
+    <Router>
+      <div>
+      <Routes>
+        {/* <Home /> */}
+        <Route path="/" exact element={<Home/>} />
+        {/* <Historical /> */}
+        <Route path="/Historical" element={<Historical/>} />
+        </Routes>
+      </div>
+      <Footer />
+    </Router>
   );
 };
 
