@@ -7,4 +7,3 @@ export const getAllRatings = () => {
         return results;
 });
 };
-
