@@ -6,10 +6,13 @@ import RateModule from "./../Rate/RateMain.js";
 const Historical = () => {
   return (
     <div>
-      <SelectModule />
+      {/* This takes in the Parent + Child components and in this case there are two of them */}
+
+      {/* This component allows the user to pick which historical figure it is on the photo or write their own answer */}
+      <SelectModule /> 
+
+      {/* THis component allows the user to rate the website and sends data to back4app database */}
       <RateModule />
-      <br />
-      <p>Where would you like to go next?</p>
     </div>
   );
 };

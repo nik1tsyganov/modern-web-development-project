@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const Components = () => {
   return (
+    // This is where routing occurs and allows the user to go
+    // main page to the historical page
     <Router>
       <div>
         <Routes>
@@ -16,6 +18,7 @@ const Components = () => {
           <Route path="/Historical" element={<Historical/>} />
         </Routes>
       </div>
+      {/* A footer is required for the links to various components to work */}
       <Footer />
     </Router>
   );
