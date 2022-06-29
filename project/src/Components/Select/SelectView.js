@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   getAllHistoricals
-} from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/SelectService";
-import {createUserResponse} from "/Users/NikitaMac/Desktop/Modern Web Development/Homework/modern-web-development-project/project/src/Common/Services/CreateService";
+} from ".//../../Common/Services/SelectService";
+import {createUserResponse} from ".//../../Common/Services/CreateService";
 import {TextForm, SelectRadioForm} from "./SelectForm";
 import Image from "../../Images/Agamemnon.jpg";
 
@@ -60,4 +60,3 @@ const SelectView = () => {
   };
   
   export default SelectView;
-
