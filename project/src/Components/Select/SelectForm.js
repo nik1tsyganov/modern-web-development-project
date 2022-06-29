@@ -5,6 +5,7 @@ const SelectRadioForm = ({ historicals, onChangeForm, onSubmitForm }) => {
   return (
     <div>
       <form className="select" onClick={onSubmitForm} onChange={onChangeForm}>
+      {/* The map function allos to iterate over the historicals array and get individual class historical objects */}
         {historicals.length > 0 && (
           historicals.map((historical) => (
             <label>
