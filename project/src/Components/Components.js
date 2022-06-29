@@ -9,11 +9,11 @@ const Components = () => {
   return (
     <Router>
       <div>
-      <Routes>
-        {/* <Home /> */}
-        <Route path="/" exact element={<Home/>} />
-        {/* <Historical /> */}
-        <Route path="/Historical" element={<Historical/>} />
+        <Routes>
+          {/* <Home /> */}
+          <Route path="/" exact element={<Home/>} />
+          {/* <Historical /> */}
+          <Route path="/Historical" element={<Historical/>} />
         </Routes>
       </div>
       <Footer />
