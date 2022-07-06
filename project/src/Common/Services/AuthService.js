@@ -1,5 +1,6 @@
 import Parse from "parse";
 
+/* Generates new Parse user, saves to Back4App database*/
 export const createUser = (newUser) => {
   const user = new Parse.User();
 
@@ -11,7 +12,7 @@ export const createUser = (newUser) => {
 
   console.log("user", user);
   return user
-    .signUp()
+    .signUp() // calls parse function to sign up user
     .then((newUserSaved) => {
       return newUserSaved;
     })
@@ -20,6 +21,7 @@ export const createUser = (newUser) => {
     });
 };
 
+/* Generates new Parse login, saves to Back4App database*/
 export const loginUser = (newUser) => {
   const user = new Parse.User();
 
@@ -31,7 +33,7 @@ export const loginUser = (newUser) => {
 
   console.log("user", user);
   return user
-    .logIn()
+    .logIn() // calls parse function to log in user
     .then((newUserSaved) => {
       return newUserSaved;
     })

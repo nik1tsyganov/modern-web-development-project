@@ -1,5 +1,6 @@
 import React from "react";
 
+// AuthForm is a child component that allows user to input personal information for account register/login
 const AuthForm = ({ user, onChange, onSubmit, onClick }) => {
   return (
     <div>

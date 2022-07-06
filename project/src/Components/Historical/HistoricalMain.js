@@ -7,6 +7,7 @@ const MainHistroical = () => {
   const [flag, setFlag] = useState(false);
   var check;
 
+    // tests for existence of parse user
   if (Parse.User.current() == null) {
     check = false;
   } else {
@@ -23,11 +24,10 @@ const MainHistroical = () => {
     }
   }, []);
 
-  // In this case the flag is acquired through a check box but it could also be received from other methods
-  // What is a Parse.User method that would help here?
-
   console.log(check);
 
+  // if parse user does not exist, redirects user to login
+  // if parse user exists, directs user to historical
   return (
     <div>
       <ProtectedRoute

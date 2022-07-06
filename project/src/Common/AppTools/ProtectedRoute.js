@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 
-// You can pass props using the spread operator to throw them on an object if there are too many to break out
+// Protected route allows for routing to be restricted to authorized users
 const ProtectedRoute = ({ component: Component, flag, ...rest }) => {
   let navigate = useNavigate();
   let location = useLocation();
@@ -10,8 +10,9 @@ const ProtectedRoute = ({ component: Component, flag, ...rest }) => {
     navigate(back);
   };
   
+  // tests flag set by user login
   return flag ? (
-    <Navigate to={rest.desiredPath} state={{ from: location }} replace />
+    <Navigate to={rest.desiredPath} state={{ from: location }} replace /> // navigates to desired path on true flag, directs user to login page if false
   ) : (
   <div>
     <p>Unauthorized!</p> 

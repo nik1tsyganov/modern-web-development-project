@@ -13,7 +13,8 @@ export default function Home() {
     </section>
     <Footer />
     <div>
-          <button onClick={() => Parse.User.logOut()}>
+      {/* Logs user out on logout button press */}
+          <button onClick={() => Parse.User.logOut()}> 
             Log out
           </button>
         </div>

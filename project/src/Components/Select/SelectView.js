@@ -15,6 +15,7 @@ const SelectView = () => {
   
     useEffect(() => {
       getAllHistoricals().then((historicals) => {
+        console.log(historicals);
         setHistoricals(historicals);
       });
     }, []);
@@ -38,6 +39,7 @@ const SelectView = () => {
 
     const onChangeHandler = (e) => {
       e.preventDefault();
+      console.log(e.target.value);
       setName(e.target.value);
     };
   
