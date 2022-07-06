@@ -1,5 +1,6 @@
 import React from "react";
 import SelectModule from "./../Select/SelectMain.js";
+import Footer from "./../Footer/Footer";
 import RateModule from "./../Rate/RateMain.js";
 
 /* Historical component displays select and rate modules*/
@@ -13,6 +14,7 @@ const Historical = () => {
 
       {/* THis component allows the user to rate the website and sends data to back4app database */}
       <RateModule />
+      <Footer />
     </div>
   );
 };
