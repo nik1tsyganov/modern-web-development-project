@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProtectedRoute from "./../../Common/AppTools/ProtectedRoute";
+import ProtectedRouteAlt from "./../../Common/AppTools/ProtectedRouteAlt";
 import AuthLogin from "./AuthLogin";
 import Parse from "parse";
 
@@ -7,6 +7,7 @@ const MainAuth = () => {
   const [flag, setFlag] = useState(false);
   var check;
 
+  // tests for existence of parse user
   if (Parse.User.current() == null) {
     check = true;
   } else {
@@ -16,19 +17,21 @@ const MainAuth = () => {
   useEffect(() => {
     if (check === true) {
       console.log("Good")
-      setFlag(false);
+      setFlag(true);
     } else {
       console.log("Bad")
-      setFlag(true);
+      setFlag(false);
     }
   }, []);
 
+  // if parse user does not exist, redirects user to login
+  // if parse user exists, directs user to home
   return (
     <div>
-      <ProtectedRoute
+      <ProtectedRouteAlt
         exact
-        desiredPath="/"
-        redirectedPath="/login"
+        desiredPath="/login"
+        redirectedPath="/"
         flag={flag}
         component={AuthLogin}
       />
