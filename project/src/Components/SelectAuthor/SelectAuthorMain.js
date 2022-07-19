@@ -1,11 +1,11 @@
 import React from "react";
-import SelectView from "./SelectView";
+import SelectAuthorView from "./SelectAuthorView";
 
 /* MAIN MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
 const SelectModule = (className) => {
   return (
     <div>
-      <SelectView className={className}/>
+      <SelectAuthorView className={className}/>
     </div>
   );
 };

@@ -3,22 +3,22 @@ import {
   getAllNames
 } from "../../Common/Services/SelectService";
 import {createUserResponse} from "../../Common/Services/CreateService";
-import {TextForm, SelectRadioForm} from "./SelectForm";
-import Image from "../../Images/Agamemnon.jpg";
+import {TextForm, SelectRadioForm} from "./SelectArtistForm";
+import Image from "../../Images/vangogh.jpg";
 
 
-const SelectView = (className) => {
+const SelectArtistView = (className) => {
 
-    className = className.className.className
+  className = className.className.className
 
-    const [historicals, setHistoricals] = useState([]);
+    const [artists, setArtists] = useState([]);
     const [userResponses, setUserResponses] = useState([]);
     const [response, setResponse] = useState();
   
     useEffect(() => {
-      getAllNames(className).then((historicals) => {
-        console.log(historicals);
-        setHistoricals(historicals);
+      getAllNames("artists").then((artists) => {
+        console.log(artists);
+        setArtists(artists);
       });
     }, []);
   
@@ -47,12 +47,12 @@ const SelectView = (className) => {
   
     return (
     <div>
-        <h1 className="head">Pick the historical figure</h1>
+        <h1 className="head">Pick the artist</h1>
         <div>
-            <img src={Image} alt="Agamemnon" width="275" height="300" />
+            <img src={Image} alt="vangogh" width="275" height="300" />
         </div>
         <div>
-            <SelectRadioForm historicals={historicals} onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
+            <SelectRadioForm artists={artists} onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
         </div>
         <p>Write in your own:</p>
             <TextForm onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
@@ -61,4 +61,4 @@ const SelectView = (className) => {
     );
   };
   
-  export default SelectView;
+  export default SelectArtistView;
