@@ -1,5 +1,6 @@
 import React from "react";
 import Footer from "./../Footer/Footer";
+import Comments from "./../Comments/CommentList"
 import Parse from "parse";
 
 /* Home component is the default page location */
@@ -18,6 +19,9 @@ export default function Home() {
             Log out
           </button>
         </div>
+    <div>
+      <Comments />
+    </div>
     </div>
   );
 }
