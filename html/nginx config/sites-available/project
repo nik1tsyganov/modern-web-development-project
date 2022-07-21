@@ -5,7 +5,7 @@ server {
 
 server {
 
-    root /var/www/modern-web-development-project/project;
+    root /var/www/project/html;
 
     server_name project;
     location / {
