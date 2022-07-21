@@ -1,6 +1,6 @@
 import React from "react";
 import SelectModule from "../SelectAuthor/SelectAuthorMain.js";
-import Footer from "../Footer/Footer";
+import QuizFooterAuthor from "../Footer/QuizFooterAuthor";
 import RateModule from "../Rate/RateMain.js";
 
 /* Historical component displays select and rate modules*/
@@ -15,7 +15,7 @@ const Author = () => {
       {/* THis component allows the user to rate the website and sends data to back4app database */}
       <RateModule />
       {/* Change this to route to score */}
-      <Footer />
+      <QuizFooterAuthor />
     </div>
   );
 };
