@@ -1,19 +1,17 @@
 import Parse from 'parse';
 
-  export const TestResponse = (category) => {
+  export const TestResponse = async (category) => {
 
     var currentUser = Parse.User.current();
     var username = currentUser.attributes.username;
-    //let responseString = "Response"
 
-    //const response = Parse.Object.extend(username.concat(responseString));
-    const testResponse = Parse.Object.extend("userResponse");
+    const testResponse = Parse.Object.extend("UserResponse");
     const query = new Parse.Query(testResponse);
 
+    query.equalTo('user', username);
+    query.equalTo('category', category);
 
-    //testResponse = query.contains("user", username).contains("category", category).first()
-
-    return query.contains("user", username).contains("category", category).first().find().then((results) => {
+    return query.first().then((results) => {
         return results;
 });
 };

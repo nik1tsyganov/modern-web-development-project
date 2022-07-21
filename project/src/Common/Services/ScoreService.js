@@ -2,7 +2,6 @@ import Parse from 'parse';
 
 export const createUserScore = (score) => {
     // This is so that the Creating: ... is displayed in the console and the user can see his/her input is recorded
-    console.log("Creating: ", score);
 
     var currentUser = Parse.User.current();
     var username = currentUser.attributes.username;
