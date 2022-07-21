@@ -8,10 +8,13 @@ const Comment = ({
   setActiveComment,
   activeComment,
   currentUser,
+  filteredIds = [],
+  reduxWord = "",
   updateComment,
   deleteComment,
   addComment,
   parentId = null,
+  usersForMention = [],
   currentUserId
 }) => {
 
@@ -54,6 +57,7 @@ const Comment = ({
             handleCancel={() => {
               setActiveComment(null);
             }}
+            usersForMention={usersForMention}
             currentUser={currentUser}
           />
         )}
@@ -91,26 +95,32 @@ const Comment = ({
           <CommentForm
             submitLabel="Reply"
             handleSubmit={(text) => {addComment(text, currentUser.id, replyId, currentUser.attributes.username)}}
+            usersForMention={usersForMention}
             currentUser={currentUser}
           />
         )}
         {replies.length > 0 && (
           <div className="replies">
             {replies.map((reply) => (
+              (filteredIds.includes(reply.id) || (reduxWord === "")) ? 
               <Comment
                 comment={reply}
                 key={reply.id}
                 setActiveComment={setActiveComment}
                 activeComment={activeComment}
                 currentUser={currentUser}
+                filteredIds={filteredIds}
+                reduxWord={reduxWord}
                 updateComment={updateComment}
                 deleteComment={deleteComment}
                 addComment={addComment}
                 parentId={reply.id}
                 getReplies={getReplies}
                 replies={getReplies(reply.id)}
+                usersForMention={usersForMention}
                 currentUserId={currentUserId}
               />
+              : <></>
             ))}
           </div>
         )}

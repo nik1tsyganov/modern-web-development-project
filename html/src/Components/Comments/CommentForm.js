@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Mention, MentionsInput } from "react-mentions";
 
 const CommentForm = ({
   handleSubmit,
@@ -6,6 +7,7 @@ const CommentForm = ({
   hasCancelButton = false,
   currentUser,
   replyIdPass = null,
+  usersForMention = [],
   handleCancel,
   initialText = "",
 }) => {
@@ -22,11 +24,20 @@ const CommentForm = ({
   return (
     <form onSubmit={onSubmit}>
 
-      <textarea
+      <MentionsInput
         className="comment-form-textarea"
         value={text}
         onChange={(e) => setText(e.target.value)}
-      />
+        placeholder={"Mention people using @"}
+        forceSuggestionsAboveCursor={true}
+        a11ySuggestionsListLabel={"Suggested mentions"}
+      >
+        <Mention 
+          data={usersForMention} 
+          trigger="@" 
+          markup='__display__ [__id__]'
+        />
+      </MentionsInput>
 
       <button className="comment-form-button" disabled={isTextareaDisabled}>
         {submitLabel}
