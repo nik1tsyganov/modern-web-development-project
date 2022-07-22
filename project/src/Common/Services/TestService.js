@@ -1,6 +1,6 @@
 import Parse from 'parse';
 
-  export const TestResponse = async (category) => {
+  export const TestResponse = (category) => {
 
     var currentUser = Parse.User.current();
     var username = currentUser.attributes.username;

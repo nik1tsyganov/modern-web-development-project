@@ -1,16 +1,25 @@
 import React from "react";
 
 /* STATELESS CHILD COMPONENT */
-const FriendsList = (friends) => {
+const FriendsList = ({friends, onChangeForm, onSubmitForm }) => {
+
   return (
     <div>
         <ul>
-            {friends.length > 0 && (
-                friends.map((friends) => (
+            {typeof friends !== 'undefined' && (
+                friends.map((friend) => (
                 <li>
-                    <p>{friends.attributes.username}: {friends.attributes.highScore}</p>
+                    <p>{friend.attributes.username}: {friend.attributes.score}</p>
                 </li>)))}
         </ul>
+        <div>
+            <form>
+                <input text="addFriend" onChange={onChangeForm} />
+                <button type="submit" onClick={onSubmitForm}>
+                    Add Friend
+                </button>
+            </form>
+        </div>
     </div>
   );
 };
