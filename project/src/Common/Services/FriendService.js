@@ -1,25 +1,15 @@
 import Parse from 'parse';
 
-export const getAllFriends = async () => {
+export const getFriend = (friendUserName) => {
 
-    var currentUser = Parse.User.current();
-    var username = currentUser.attributes.username;
-
-    console.log(username)
     const testResponse = Parse.Object.extend("User");
 
     const query = new Parse.Query(testResponse);
-    query.equalTo('username', username);
 
-    let queryResult = await query.first()
+    query.equalTo('username', friendUserName);
 
-    console.log("queryResult")
-    console.log(queryResult)
-
-    var friends = queryResult.attributes.friendsList;
-    console.log("friends")
-    console.log(friends)
-
-    return friends;
+    return query.first().then((result) => {
+        return result;
+});
 
 };

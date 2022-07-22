@@ -6,13 +6,27 @@ export const createUserScore = (score) => {
     var currentUser = Parse.User.current();
     var username = currentUser.attributes.username;
 
-    const UserResponse = Parse.Object.extend("UserScore");
-    const userResponse = new UserResponse();
+    // console.log("currentUser")
+    // console.log(currentUser)
 
-    userResponse.set("user", username);
-    userResponse.set("score", score);
-    
-    return userResponse.save().then((result) => {
+    const userScore = Parse.Object.extend("UserScore");
+    const UserScore = new userScore();
+
+    UserScore.set("user", username);
+    UserScore.set("score", score);
+
+    // console.log("currentUser.attributes.score")
+    // console.log(currentUser.attributes.score)
+
+    // if (score > currentUser.attributes.score){
+    //     // console.log("WEEEEEE")
+
+    //     currentUser.set("score", score);
+    //     currentUser.save();
+    //     currentUser.fetch();
+    // }
+
+    return UserScore.save().then((result) => {
         return result;
     });
   };
