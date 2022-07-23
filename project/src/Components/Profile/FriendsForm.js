@@ -19,6 +19,7 @@ const FriendsList = ({friends, onChangeForm, onSubmitForm }) => {
                 <button type="submit" onClick={onSubmitForm}>
                     Add Friend
                 </button>
+                <h4>Does not rerender on button click, refresh page</h4>
             </form>
         </div>
     </div>

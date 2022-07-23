@@ -52,7 +52,6 @@ const ProfileView = () => {
 
   useEffect(() => {
 
-
     if (flag) {
 
         Promise.all(
@@ -95,6 +94,8 @@ useEffect(() => {
     console.log(e.target.value);
     setResponse(e.target.value);
   };
+
+  console.log("render")
 
 if (renderFlag || reRender){
     return (
