@@ -14,13 +14,13 @@ import Parse from "parse";
 
 const Comments = () => {
 
-    const [backendComments, setBackendComments] = useState([]);
+    const [comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
-    const rootComments = backendComments.filter(
-        (backendComment) => {
-            if (backendComment.attributes  !== undefined) {
-                if (backendComment.attributes.parentId === null)
-                    return backendComment;
+    const rootComments = comments.filter(
+        (comment) => {
+            if (comment.attributes  !== undefined) {
+                if (comment.attributes.parentId === null)
+                    return comment;
             }
         });
     const [usersForMention, setUsersForMention] = useState([]);
@@ -36,11 +36,11 @@ const Comments = () => {
     }
 
     const getReplies = (commentId) =>
-        backendComments
-        .filter((backendComment) => {
-            if (backendComment.attributes !== undefined) {
-                if (backendComment.attributes.parentId === commentId) {
-                    return backendComment;
+        comments
+        .filter((comment) => {
+            if (comment.attributes !== undefined) {
+                if (comment.attributes.parentId === commentId) {
+                    return comment;
                 }
             }
         })
@@ -50,28 +50,32 @@ const Comments = () => {
 
     const addComment = (text, userId, parentId, username) => {
         createCommentService(text, userId, parentId, username).then((comment) => {
-        setBackendComments([comment, ...backendComments]);
+        setComments([...comments, comment]);
         setActiveComment(null);
         });
     };
 
     const updateComment = (commentId, text) => {
-        updateCommentService(commentId, text).then((comment) => {
-            const updatedBackendComments = backendComments.filter(
-                (backendComment) => backendComment.id !== comment.id
-            );
-            setBackendComments([comment, ...updatedBackendComments]);
+        updateCommentService(commentId, text).then((updatedComment) => {
+            const updatedComments = comments.map(
+                (comment) => {
+                    if (comment.id === updatedComment.id) {
+                        return updatedComment;
+                    }
+                    return comment;
+                });
+            setComments(updatedComments);
             setActiveComment(null);
         });
     };
 
     const deleteComment = (commentId) => {
         if (window.confirm("Are you sure you want to remove comment?")) {
-            deleteCommentService(commentId).then((result) => {
-                const updatedBackendComments = backendComments.filter(
-                (backendComment) => backendComment.id !== result.id
+            deleteCommentService(commentId).then((deletedComment) => {
+                const updatedComments = comments.filter(
+                (comment) => comment.id !== deletedComment.id
                 );
-                setBackendComments(updatedBackendComments);
+                setComments(updatedComments);
                 setActiveComment(null);
             });
         }
@@ -79,12 +83,12 @@ const Comments = () => {
 
     const reduxCommentSearch = (word) => {
         var filteredCommentsIds = [];
-        backendComments
-        .filter((backendComment) =>  {
-            if (backendComment.attributes !== undefined) {
-                if (containsWord(backendComment.attributes.body, word) === true) {
-                    filteredCommentsIds.push(backendComment.id);
-                    return backendComment;
+        comments
+        .filter((comment) =>  {
+            if (comment.attributes !== undefined) {
+                if (containsWord(comment.attributes.body, word) === true) {
+                    filteredCommentsIds.push(comment.id);
+                    return comment;
                 }
             }
         })
@@ -104,16 +108,12 @@ const Comments = () => {
 
     useEffect(() => {
         getCommentsService().then((data) => {
-            setBackendComments(data);
+            setComments(data);
         });
         getUsername().then((results) => {
-            var users = [];
-            for (let i = 0; i < results.length; i++) {
-                var dict = {};
-                dict["id"] = results[i].attributes.username;
-                dict["display"] = results[i].attributes.firstName;
-                users.push(dict);
-            }
+            var users = results.map((result) => {
+                return {id: result.attributes.username, display: result.attributes.firstName}
+            });
             setUsersForMention(users);
         })
         if (searchFlag) {
