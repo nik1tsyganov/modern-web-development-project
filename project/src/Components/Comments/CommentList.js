@@ -37,7 +37,7 @@ const Comments = () => {
 
     const getReplies = (commentId) =>
         backendComments
-        .filter((backendComment) =>  {
+        .filter((backendComment) => {
             if (backendComment.attributes !== undefined) {
                 if (backendComment.attributes.parentId === commentId) {
                     return backendComment;
@@ -126,13 +126,13 @@ const Comments = () => {
     
     return (
         <div className="comments">
-            <h3 className="comments-space-title">Search the comment space</h3>
+            <h3 className="comments-search-title">Search the comment space</h3>
             <SearchForm onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
             <br />
             <h3 className="comments-title">Comments</h3>
-            <div className="comment-form-title">Write comment</div>
-            <CommentForm submitLabel="Write" usersForMention={usersForMention} currentUser={currentUser} handleSubmit={addComment} />
-            <div className="comments-container">
+            <div className="comments-submit-title">Write comment</div>
+            <CommentForm submitLabel="Comment" usersForMention={usersForMention} currentUser={currentUser} handleSubmit={addComment} />
+            <div className="comments-start-of-list">
                 {rootComments.map((rootComment) => (
                     (filteredIds.includes(rootComment.id) || (reduxWord === "")) ? 
                     <Comment
@@ -150,7 +150,6 @@ const Comments = () => {
                         getReplies={getReplies}
                         replies={getReplies(rootComment.id)}
                         usersForMention={usersForMention}
-                        currentUserId={currentUser.id}
                     /> : <div></div>
                 ))}
             </div>

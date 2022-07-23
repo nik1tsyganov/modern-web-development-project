@@ -14,8 +14,7 @@ const Comment = ({
   deleteComment,
   addComment,
   parentId = null,
-  usersForMention = [],
-  currentUserId
+  usersForMention = []
 }) => {
 
   const isEditing =
@@ -28,11 +27,11 @@ const Comment = ({
     activeComment.id === comment.id &&
     activeComment.type === "replying";
 
-  const canDelete = currentUserId === comment.attributes.userId && replies.length === 0;
+  const canDelete = currentUser.id === comment.attributes.userId && replies.length === 0;
 
-  const canReply = Boolean(currentUserId);
+  const canReply = Boolean(currentUser.id);
 
-  const canEdit = currentUserId === comment.attributes.userId;
+  const canEdit = currentUser.id === comment.attributes.userId;
 
   const replyId = parentId ? parentId : comment.id;
 
@@ -40,10 +39,10 @@ const Comment = ({
 
   return (
     <div key={comment.id} className="comment">
-      <div className="comment-right-part">
+      <div className="comment-stretch">
         <div className="comment-content">
           <div className="comment-author">{comment.attributes.username}</div>
-          <div>{createdAt}</div>
+          <div className="comment-date">{createdAt}</div>
         </div>
 
         {!isEditing && <div className="comment-text">{comment.attributes.body}</div>}
@@ -64,7 +63,7 @@ const Comment = ({
         <div className="comment-actions">
           {canReply && (
             <div
-              className="comment-action"
+              className="comment-reply"
               onClick={() =>
                 setActiveComment({ id: comment.id, type: "replying" })
               }
@@ -74,7 +73,7 @@ const Comment = ({
           )}
           {canEdit && (
             <div
-              className="comment-action"
+              className="comment-edit"
               onClick={() =>
                 setActiveComment({ id: comment.id, type: "editing" })
               }
@@ -84,7 +83,7 @@ const Comment = ({
           )}
           {canDelete && (
             <div
-              className="comment-action"
+              className="comment-delete"
               onClick={() => deleteComment(comment.id)}
             >
               Delete
@@ -118,7 +117,6 @@ const Comment = ({
                 getReplies={getReplies}
                 replies={getReplies(reply.id)}
                 usersForMention={usersForMention}
-                currentUserId={currentUserId}
               />
               : <></>
             ))}
