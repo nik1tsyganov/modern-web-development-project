@@ -15,7 +15,10 @@ export default function Home() {
     <Footer />
     <div>
       {/* Logs user out on logout button press */}
-          <button onClick={() => Parse.User.logOut()}> 
+          <button onClick={() => {
+            alert("Logged out")
+            Parse.User.logOut()
+            }}> 
             Log out
           </button>
         </div>

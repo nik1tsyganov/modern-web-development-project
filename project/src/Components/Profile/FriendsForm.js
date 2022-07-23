@@ -2,16 +2,15 @@ import React from "react";
 
 /* STATELESS CHILD COMPONENT */
 const FriendsList = ({friends, onChangeForm, onSubmitForm }) => {
-    console.log("stuff")
-    console.log(friends[0])
-    console.log(friends[0])
+
   return (
     <div>
         <ul>
-            {typeof friends !== 'undefined' && (
+            {friends.length > 0 && (
                 friends.map((friend) => (
                 <li>
-                    <p>{friend.attributes.username}: {friend.attributes.score}</p>
+
+                    <p key={friend.id}> {friend.attributes.username}: {friend.attributes.score}</p>
                 </li>)))}
         </ul>
         <div>
@@ -20,6 +19,7 @@ const FriendsList = ({friends, onChangeForm, onSubmitForm }) => {
                 <button type="submit" onClick={onSubmitForm}>
                     Add Friend
                 </button>
+                <h4>Does not rerender on button click, refresh page</h4>
             </form>
         </div>
     </div>
