@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap");
+
+html {
+  /* stretches linear-gradient across whole page */
+  height: 100%;
+}
+
+button {
+  /* sets google font */
+  font-family: "Bebas Neue";
+  font-size: 100%;
+  margin-top: 8px;
+}
+
+.page {
+  background-image: linear-gradient(pink, snow);
+  /* ensures gradient is stetched across page and does not repeat */
+  background-repeat: no-repeat;
+}
+
+select, form.select {
+  font-family: "Bebas Neue";
+  padding: 5px 10px;
+  font-size: 100%;
+  margin-top: 8px;
+  border: 3px;
+  border-color: black;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+li, p, input {
+  font-family: "Bebas Neue";
+  font-size: 100%;
+  margin-bottom: 0px;
+}
+
+input {
+  /* sets google font for input (submit button) */
+  font-size: 100%;
+  background: snow;
+}
+
+footer {
+  margin-top: -12px;
+}
+
+.head {
+  /* sets google font */
+  font-family: "Anton", sans-serif;
+  /* add background image to header */
+  /* ensures background image stretches across page
+    and does not repeat */
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
