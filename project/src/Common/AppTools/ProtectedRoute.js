@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
+import EndFooter from "../../Components/Footer/EndFooter";
 
 // Protected route allows for routing to be restricted to authorized users
 const ProtectedRoute = ({ component: Component, flag, ...rest }) => {
@@ -16,7 +17,8 @@ const ProtectedRoute = ({ component: Component, flag, ...rest }) => {
   ) : (
   <div>
     <p>Unauthorized!</p> 
-    <button onClick={routeChange}>Go login</button>
+    {/* <button onClick={routeChange}>Go login</button> */}
+    <EndFooter/>
   </div>
   )
 };
