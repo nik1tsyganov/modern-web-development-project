@@ -5,25 +5,28 @@ const CommentForm = ({
   handleSubmit,
   submitLabel,
   hasCancelButton = false,
-  currentUser,
-  replyIdPass = null,
   usersForMention = [],
   handleCancel,
   initialText = "",
 }) => {
 
+  // I wasn't able to figure out how to make the form stateless since the text value kept being udpated to a single letter each
+  // time as opposed to the whole word or string in the comment
   const [text, setText] = useState(initialText);
   const isTextareaDisabled = text.length === 0;
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    handleSubmit(text, currentUser.id, replyIdPass, currentUser.attributes.username);
+  // This onSubmit function makes sure the correct handle is executed like addComment or updateComment
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(text);
     setText("");
   };
 
   return (
     <form onSubmit={onSubmit}>
 
+      {/* This mentions module developed by the 3rd party allows us to implement the @ feature and look up existing usres
+      who can be referenced */}
       <MentionsInput
         className="comment-textarea"
         value={text}
@@ -39,10 +42,10 @@ const CommentForm = ({
         />
       </MentionsInput>
 
-      <button className="comment-button" disabled={isTextareaDisabled}>
-        {submitLabel}
-      </button>
+      {/* The comment button is only visible when there is some text enterred */}
+      <button className="comment-button" disabled={isTextareaDisabled}>{submitLabel}</button>
 
+      {/* Cancel is only visible when the user is trying to edit the a comment */}
       {hasCancelButton && (
         <button
           className="comment-button comment-cancel-button"
