@@ -15,7 +15,7 @@ import {FriendsList} from "./FriendsForm";
 import Parse from 'parse';
 
 
-const ProfileView = async () => {
+const ProfileView = () => {
 
   const [name, setName] = useState();
   const [highScore, setScore] = useState();
@@ -23,6 +23,9 @@ const ProfileView = async () => {
   const [friends, setFriends] = useState([]);
   const [friendArray, setFriendArray] = useState([]);
   const [response, setResponse] = useState();
+  const [flag, setFlag] = useState(false);
+  const [renderFlag, setRenderFlag] = useState(false);
+  const [reRender, setRerenderFlag] = useState(false);
 
   useEffect(() => {
     /// Turn into a service
@@ -40,31 +43,51 @@ const ProfileView = async () => {
     setScore(score)
 
     getFriend().then((FriendObjects) => {
-        console.log("FriendObjects")
-        console.log(FriendObjects)
-        FriendObjects.map((friend) => {
-            await pullFriend(friend.attributes.friend.id).then((result) => {
-                setFriends([...friends, result])
-            })
-        })
-        console.log("friends")
-        console.log(friends)
 
+        setFriendArray(FriendObjects)
+        setFlag(true)
     });
 
   }, []);
 
+  useEffect(() => {
+
+
+    if (flag) {
+
+        Promise.all(
+            friendArray.map((friend) => {
+                let FriendId = pullFriend(friend.attributes.friend.id);
+
+                return FriendId
+            })
+        ).then((result) => {
+
+            setFriends(result)
+
+            setRenderFlag(true)
+        })
+
+    }
+
+  }, [flag, friendArray]);
+
+useEffect(() => {
+  
+    if (reRender && response) {
+        addFriend(response).then((result) => {
+            console.log(result)
+        });
+    }
+
+    setRerenderFlag(false)
+    
+}, [reRender, response]);
 
   const onClickHandler = (e) => {
     e.preventDefault();
+    setRerenderFlag(true)
 
-    if (response) {
-        getFriendId(response).then((Id) => {
-            addFriend(Id).then((result) => {
-                console.log(result)
-                });
-        })
-    }
   };
 
   const onChangeHandler = (e) => {
@@ -73,19 +96,21 @@ const ProfileView = async () => {
     setResponse(e.target.value);
   };
 
-  return (
-  <div>
-      <h1 className="head">Profile</h1>
-      <div>
-        <p>Name: {name}</p>
-        <p>Username: {userName}</p>
-        <p>High Score: {highScore}</p>
-      </div>
-      <br />
-      <h2>Friends List: </h2>
-      <FriendsList friends={friends} onChangeForm={onChangeHandler} onSubmitForm={onClickHandler}/>
-  </div>
-  );
+if (renderFlag || reRender){
+    return (
+        <div>
+            <h1 className="head">Profile</h1>
+            <div>
+              <p>Name: {name}</p>
+              <p>Username: {userName}</p>
+              <p>High Score: {highScore}</p>
+            </div>
+            <br />
+            <h2>Friends List: </h2>
+            <FriendsList friends={friends} onChangeForm={onChangeHandler} onSubmitForm={onClickHandler}/>
+        </div>
+        );
+}
 };
   
   export default ProfileView;
