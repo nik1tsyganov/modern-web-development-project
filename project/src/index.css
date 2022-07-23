@@ -14,6 +14,12 @@ button {
   margin-top: 8px;
 }
 
+.page {
+  background-image: linear-gradient(pink, snow);
+  /* ensures gradient is stetched across page and does not repeat */
+  background-repeat: no-repeat;
+}
+
 select, form.select {
   font-family: "Bebas Neue";
   padding: 5px 10px;

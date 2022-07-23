@@ -9,12 +9,29 @@ export const addFriend = async (friend) => {
 
     const UserClass = Parse.Object.extend("User")
 
-    const query = new Parse.Query(UserClass);
-    query.equalTo("username", username)
+    let query1 = new Parse.Query(UserClass);
+    let query2 = new Parse.Query(UserClass);
 
-    let user = await query.first()
+    // add query testing if user exists with that username
+    query1.equalTo("username", username)
+    query2.equalTo("username", friend)
+    query2._andQuery([query1])
 
-    let friends = user.attributes.friendsList
+    let user = await query2.first()
+    console.log("user")
+    console.log(user)
+
+    let friends = []
+
+    if (typeof user == 'string') {
+        console.log("string")
+        if (user[0].attributes.username === username){
+            friends = user[0].attributes.friendsList
+        }
+        else if (user[1].attributes.username === username){
+            friends = user[1].attributes.friendsList
+        }
+    }
 
     if (typeof friends !== 'undefined') {
         friends.push(friend)

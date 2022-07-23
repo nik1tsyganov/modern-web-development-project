@@ -39,13 +39,15 @@ const ProfileView = () => {
       setName(fullName)
       setScore(score)
 
-      friendsArray.map((friendUserName) => (
-        getFriend(friendUserName).then((result) => {
-          setFriends([...friends, result])
-          console.log("result")
-          console.log(result)
-        })
-      ));
+      if (typeof friendsArray !== 'undefined') {
+        friendsArray.map((friendUserName) => (
+          getFriend(friendUserName).then((result) => {
+            setFriends([...friends, result])
+            console.log("result")
+            console.log(result)
+          })  
+        ));
+    }
 
       console.log("hehehe")
       console.log(friends)

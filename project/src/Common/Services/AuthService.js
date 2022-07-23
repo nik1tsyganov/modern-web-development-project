@@ -9,6 +9,7 @@ export const createUser = (newUser) => {
   user.set("lastName", newUser.lastName);
   user.set("password", newUser.password);
   user.set("email", newUser.email);
+  user.set("friendsList", []);
 
   console.log("user", user);
   return user

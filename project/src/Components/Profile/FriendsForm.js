@@ -2,7 +2,9 @@ import React from "react";
 
 /* STATELESS CHILD COMPONENT */
 const FriendsList = ({friends, onChangeForm, onSubmitForm }) => {
-
+    console.log("stuff")
+    console.log(friends[0])
+    console.log(friends[0])
   return (
     <div>
         <ul>
