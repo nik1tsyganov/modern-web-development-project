@@ -1,50 +1,33 @@
 import Parse from 'parse';
 
-export const addFriend = async (friend) => {
+export const addFriend = async (friendId) => {
     // This is so that the Creating: ... is displayed in the console and the user can see his/her input is recorded
 
     var currentUser = Parse.User.current();
+    
 
-    var username = currentUser.attributes.username;
+    const Friend = Parse.Object.extend("Friend")
+    const friend = new Friend
 
-    const UserClass = Parse.Object.extend("User")
-
-    let query1 = new Parse.Query(UserClass);
-    let query2 = new Parse.Query(UserClass);
+    let query = new Parse.Query(Friend);
 
     // add query testing if user exists with that username
-    query1.equalTo("username", username)
-    query2.equalTo("username", friend)
-    query2._andQuery([query1])
+    query.equalTo("friend", friendId)
+    query.equalTo("user", currentUser.attributes.username)
 
-    let user = await query2.first()
-    console.log("user")
+    let user = await query.first()
+
+    console.log("User Test")
     console.log(user)
+    console.log(typeof user)
 
-    let friends = []
+    // try {
+    //     let user = await query.first()
 
-    if (typeof user == 'string') {
-        console.log("string")
-        if (user[0].attributes.username === username){
-            friends = user[0].attributes.friendsList
-        }
-        else if (user[1].attributes.username === username){
-            friends = user[1].attributes.friendsList
-        }
-    }
+    // } catch (error) {
 
-    if (typeof friends !== 'undefined') {
-        friends.push(friend)
-        console.log("hehehehe")
-    }
-    else {
-        friends = [friend]
-        console.log("hahahaha")
-    }
-    
-    console.log("friends")
-    console.log(friends)
-    currentUser.set("friendsList", friends);
+    // }
+
     
     return currentUser.save().then((result) => {
         return result;
