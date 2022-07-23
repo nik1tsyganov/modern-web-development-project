@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 By Nikita:
-    1. Comment module with filter/search option and mentions of other registered users
+    1. Comment module with filter/search option and mentions of other registered users.
     2. Used Digital Ocean App Engine to host the app on: https://urchin-app-hxswc.ondigitalocean.app/
 
 ### Changed
