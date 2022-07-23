@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import {
-  getAllHistoricals
-} from ".//../../Common/Services/SelectService";
-import {createUserResponse} from ".//../../Common/Services/CreateService";
+  getAllNames
+} from "../../Common/Services/SelectService";
+import {createUserResponse} from "../../Common/Services/CreateService";
 import {TextForm, SelectRadioForm} from "./SelectForm";
 import Image from "../../Images/Agamemnon.jpg";
 
 
-const SelectView = () => {
+const SelectView = (className) => {
+
+    className = className.className.className
 
     const [historicals, setHistoricals] = useState([]);
     const [userResponses, setUserResponses] = useState([]);
-    const [name, setName] = useState();
+    const [response, setResponse] = useState();
   
     useEffect(() => {
-      getAllHistoricals().then((historicals) => {
+      getAllNames(className).then((historicals) => {
         console.log(historicals);
         setHistoricals(historicals);
       });
@@ -24,13 +26,13 @@ const SelectView = () => {
   
 
     useEffect(() => {
-      if (name && add) {
-        createUserResponse(name).then((userResponse) => {
+      if (response && add) {
+        createUserResponse(response, className).then((userResponse) => {
           setAdd(false);
           setUserResponses([...userResponses, userResponse]);
         });
       }
-    }, [name, userResponses, add]);
+    }, [response, userResponses, add]);
   
     const onClickHandler = (e) => {
       e.preventDefault();
@@ -40,7 +42,7 @@ const SelectView = () => {
     const onChangeHandler = (e) => {
       e.preventDefault();
       console.log(e.target.value);
-      setName(e.target.value);
+      setResponse(e.target.value);
     };
   
     return (

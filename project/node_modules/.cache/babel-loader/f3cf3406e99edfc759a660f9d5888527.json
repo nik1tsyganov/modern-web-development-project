@@ -1,0 +1,1 @@
+{"ast":null,"code":"var getIterator = require('../internals/get-iterator');\n\nmodule.exports = getIterator;","map":null,"metadata":{},"sourceType":"script"}
