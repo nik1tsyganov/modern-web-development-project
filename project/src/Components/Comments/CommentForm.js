@@ -25,7 +25,7 @@ const CommentForm = ({
     <form onSubmit={onSubmit}>
 
       <MentionsInput
-        className="comment-form-textarea"
+        className="comment-textarea"
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={"Mention people using @"}
@@ -39,16 +39,15 @@ const CommentForm = ({
         />
       </MentionsInput>
 
-      <button className="comment-form-button" disabled={isTextareaDisabled}>
+      <button className="comment-button" disabled={isTextareaDisabled}>
         {submitLabel}
       </button>
 
       {hasCancelButton && (
         <button
-          type="button"
-          className="comment-form-button comment-form-cancel-button"
+          className="comment-button comment-cancel-button"
           onClick={handleCancel}
-        > Cancel
+        >Cancel
         </button>
 
       )}

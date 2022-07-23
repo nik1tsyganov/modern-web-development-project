@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [0.4.0] - 2022-07-23
+
+### Added
+
+By Nikita:
+    1. Comment module with filter/search option and mentions of other registered users
+    2. Used Digital Ocean App Engine to host the app on: https://urchin-app-hxswc.ondigitalocean.app/
+
+### Changed
+
+### Fixed
+
 # [0.3.0] - 2022-07-08
 
 ### Added
