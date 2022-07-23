@@ -2,11 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<<<<<<< HEAD
 # [0.3.0] - 2022-07-08
-=======
-# [0.3.0] - 2022-06-29
->>>>>>> feature/finalA
 
 ### Added
 
