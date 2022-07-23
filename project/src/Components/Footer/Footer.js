@@ -19,14 +19,18 @@ const Footer = () => (
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/historical-auth">Historical</Link>
+          <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/register">Register</Link>
+          <Link to="/historical-auth">Quiz</Link>
         </li>
         <li>
           <Link to="/login-auth">Login</Link>
         </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+        {/* Add link to profile */}
       </ul>
     </nav>
   </footer>

@@ -3,6 +3,10 @@ import Home from "./Home/Home";
 import AuthRegister from "./Auth/AuthRegister";
 import AuthLogin from "./Auth/AuthLogin";
 import Historical from "./Historical/Historical";
+import Author from "./Author/Author";
+import Artist from "./Artist/Artist";
+import Score from "./Score/Score";
+import ProfileMain from "./Profile/ProfileMain";
 import MainHistroical from "./Historical/HistoricalMain";
 import MainAuth from "./Auth/AuthLoginMain";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -21,6 +25,10 @@ const Components = () => {
           <Route path="/register" exact element={<AuthRegister />} />
           <Route path="/login" exact element={<AuthLogin />} />
           <Route path="/historical" exact element={<Historical />} />
+          <Route path="/author" exact element={<Author />} />
+          <Route path="/profile" exact element={<ProfileMain />} />
+          <Route path="/artist" exact element={<Artist />} />
+          <Route path="/score" exact element={<Score />} />
         </Routes>
       {/* A footer is required for the links to various components to work */}
     </Router>
