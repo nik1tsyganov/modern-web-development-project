@@ -5,15 +5,11 @@ import {
 import {
     pullFriend
   } from "../../Common/Services/PullFriendService";
-  import {
-    getFriendId
-  } from "../../Common/Services/FriendIdService";
 import {
   addFriend
 } from "../../Common/Services/AddFriend";
 import {FriendsList} from "./FriendsForm";
 import Parse from 'parse';
-
 
 const ProfileView = () => {
 
@@ -24,14 +20,16 @@ const ProfileView = () => {
   const [friendArray, setFriendArray] = useState([]);
   const [response, setResponse] = useState();
   const [flag, setFlag] = useState(false);
-  const [renderFlag, setRenderFlag] = useState(false);
   const [reRender, setRerenderFlag] = useState(false);
+  const [promiseFlag, setPromiseFlag] = useState(false);
+  const [trigger, setTrigger] = useState(true);
+  
 
   useEffect(() => {
-    /// Turn into a service
+    // current user fetched
     var currentUser = Parse.User.current()
     currentUser.fetch()
-    ///
+
     var username = currentUser.attributes.username;
     var firstName = currentUser.attributes.firstName;
     var lastName = currentUser.attributes.lastName;
@@ -42,72 +40,78 @@ const ProfileView = () => {
     setName(fullName)
     setScore(score)
 
-    getFriend().then((FriendObjects) => {
+    // trigger set default to true, once new friend is added trigger set to false, will not redisplay except when new friend added
+    if (trigger) {
+      // service called to get friend objects, objects inserted into stateful array
+      getFriend().then((FriendObjects) => {
+          setFriendArray(FriendObjects)
+          setPromiseFlag(true)
+      });
 
-        setFriendArray(FriendObjects)
-        setFlag(true)
-    });
+      // Friend objects mapped over, each friend object inputted to service to pull out object
+          // id of each friend
+      if (promiseFlag) {
+        Promise.all(
+          friendArray.map((friend) => {
+              let FriendId = pullFriend(friend.attributes.friend.id);
+              return FriendId
+          })
+        ).then((result) => {
+            setFriends(result)
+            setRerenderFlag(true)
+        })
+      }
+    }
 
-  }, []);
-
-  useEffect(() => {
-
+    // flag set on click, if click, calls service to create new friend object then recalls code to display new friend
     if (flag) {
 
-        Promise.all(
-            friendArray.map((friend) => {
-                let FriendId = pullFriend(friend.attributes.friend.id);
-
-                return FriendId
+      // service called to add new friend object
+      addFriend(response).then((result) => {
+          
+          // service then another service to update display to show new friend
+          getFriend().then((FriendObjects) => {
+            Promise.all(
+              FriendObjects.map((friend) => {
+                  let FriendId = pullFriend(friend.attributes.friend.id);
+                  return FriendId
+              })
+            ).then((result) => {
+                setFriends(result)
             })
-        ).then((result) => {
-
-            setFriends(result)
-
-            setRenderFlag(true)
-        })
-
-    }
-
-  }, [flag, friendArray]);
-
-useEffect(() => {
-  
-    if (reRender && response) {
-        addFriend(response).then((result) => {
-            console.log(result)
         });
+      });
+      // reset flag
+      setFlag(false)
     }
 
-    setRerenderFlag(false)
-    
-}, [reRender, response]);
+  }, [response, flag, promiseFlag, trigger]);
 
+
+// handles click events, flag triggers add friend service
   const onClickHandler = (e) => {
     e.preventDefault();
-    setRerenderFlag(true)
-
+    setFlag(true)
+    setTrigger(false)
   };
 
+  // handles change events
   const onChangeHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     setResponse(e.target.value);
   };
 
-  console.log("render")
-
-if (renderFlag || reRender){
+if (reRender){
     return (
         <div>
-            <h1 className="head">Profile</h1>
+            <h1 className="profile">Profile</h1>
             <div>
               <p>Name: {name}</p>
               <p>Username: {userName}</p>
               <p>High Score: {highScore}</p>
             </div>
             <br />
-            <h2>Friends List: </h2>
+            <h1 className="friends-list">Friends List: </h1>
             <FriendsList friends={friends} onChangeForm={onChangeHandler} onSubmitForm={onClickHandler}/>
         </div>
         );

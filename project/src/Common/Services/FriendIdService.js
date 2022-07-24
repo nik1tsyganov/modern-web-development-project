@@ -1,5 +1,6 @@
 import Parse from 'parse';
 
+// pulls Id from user
 export const getFriendId = (username) => {
 
     const User = Parse.Object.extend("_User");

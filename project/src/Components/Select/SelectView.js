@@ -4,8 +4,6 @@ import {
 } from "../../Common/Services/SelectService";
 import {createUserResponse} from "../../Common/Services/CreateService";
 import {TextForm, SelectRadioForm} from "./SelectForm";
-import Image from "../../Images/Agamemnon.jpg";
-
 
 const SelectView = (className) => {
 
@@ -15,6 +13,7 @@ const SelectView = (className) => {
     const [userResponses, setUserResponses] = useState([]);
     const [response, setResponse] = useState();
   
+    // calls service to fetch historical names
     useEffect(() => {
       getAllNames(className).then((historicals) => {
         console.log(historicals);
@@ -24,7 +23,7 @@ const SelectView = (className) => {
   
     const [add, setAdd] = useState(false);
   
-
+    // calls service to create user response object from input
     useEffect(() => {
       if (response && add) {
         createUserResponse(response, className).then((userResponse) => {
@@ -34,11 +33,13 @@ const SelectView = (className) => {
       }
     }, [response, userResponses, add]);
   
+    // sets flag to create user response on click
     const onClickHandler = (e) => {
       e.preventDefault();
       setAdd(true);
     };
 
+    // sets response from input on change
     const onChangeHandler = (e) => {
       e.preventDefault();
       console.log(e.target.value);
@@ -47,10 +48,6 @@ const SelectView = (className) => {
   
     return (
     <div>
-        <h1 className="head">Pick the historical figure</h1>
-        <div>
-            <img src={Image} alt="Agamemnon" width="275" height="300" />
-        </div>
         <div>
             <SelectRadioForm historicals={historicals} onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
         </div>

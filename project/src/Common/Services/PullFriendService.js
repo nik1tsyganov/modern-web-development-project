@@ -1,5 +1,6 @@
 import Parse from 'parse';
 
+// gets friend object
 export const pullFriend = (friendId) => {
 
     const User = Parse.Object.extend("User");

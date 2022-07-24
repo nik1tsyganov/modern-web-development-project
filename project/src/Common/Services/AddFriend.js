@@ -1,5 +1,6 @@
 import Parse from 'parse';
 
+// adds new friend
 export const addFriend = async (friendId) => {
     // This is so that the Creating: ... is displayed in the console and the user can see his/her input is recorded
 
@@ -21,30 +22,28 @@ export const addFriend = async (friendId) => {
     userQuery.equalTo("username", friendId)
     let userTest = await userQuery.first()
 
-    var userIdPointer = {
-        __type: 'Pointer',
-        className: '_User',
-        objectId: userId
-    }
-    var friendIdPointer = {
-        __type: 'Pointer',
-        className: '_User',
-        objectId: userTest.id
-    }
-
-    query.equalTo("friend", userIdPointer)
-    query.equalTo("user", friendIdPointer)
-    let friendTest = await query.first()
-
 
     if (typeof userTest !== 'undefined'){
         console.log("User Test")
         console.log(userTest)
         console.log(typeof userTest)
 
+        var userIdPointer = {
+            __type: 'Pointer',
+            className: '_User',
+            objectId: userId
+        }
+        var friendIdPointer = {
+            __type: 'Pointer',
+            className: '_User',
+            objectId: userTest.id
+        }
+    
+        query.equalTo("friend", userIdPointer)
+        query.equalTo("user", friendIdPointer)
+        let friendTest = await query.first()
 
         // add query testing if user exists with that username
-        
 
         if (typeof friendTest === 'undefined'){   
             console.log("Friend Test")
