@@ -9,13 +9,16 @@ export default function Home() {
     <div>
     <section>
       {/* This is one of the routing pages and is designed to guide the user to the historical picks */}
-      <h1>What Person is This?</h1>
-      <p>Select a category to play the game:</p>
+      <h1 className="profile">What Person is This?</h1>
+      <p>Log in then select "Quiz" to play the game</p>
     </section>
     <Footer />
     <div>
       {/* Logs user out on logout button press */}
-          <button onClick={() => Parse.User.logOut()}> 
+          <button onClick={() => {
+            alert("Logged out")
+            Parse.User.logOut()
+            }}> 
             Log out
           </button>
         </div>
