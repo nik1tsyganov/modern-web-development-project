@@ -1,52 +1,71 @@
 import Parse from 'parse';
 
-export const addFriend = async (friend) => {
+// adds new friend
+export const addFriend = async (friendId) => {
     // This is so that the Creating: ... is displayed in the console and the user can see his/her input is recorded
 
+    console.log("friendId")
+    console.log(friendId)
+
     var currentUser = Parse.User.current();
+    var userId = currentUser.id;
+    
+    const User = Parse.Object.extend("_User")
 
-    var username = currentUser.attributes.username;
+    const Friend = Parse.Object.extend("Friend")
+    const friend = new Friend
+    const friend2 = new Friend
 
-    const UserClass = Parse.Object.extend("User")
+    let query = new Parse.Query(Friend);
+    let userQuery = new Parse.Query(User);
 
-    let query1 = new Parse.Query(UserClass);
-    let query2 = new Parse.Query(UserClass);
+    userQuery.equalTo("username", friendId)
+    let userTest = await userQuery.first()
 
-    // add query testing if user exists with that username
-    query1.equalTo("username", username)
-    query2.equalTo("username", friend)
-    query2._andQuery([query1])
 
-    let user = await query2.first()
-    console.log("user")
-    console.log(user)
+    if (typeof userTest !== 'undefined'){
+        console.log("User Test")
+        console.log(userTest)
+        console.log(typeof userTest)
 
-    let friends = []
-
-    if (typeof user == 'string') {
-        console.log("string")
-        if (user[0].attributes.username === username){
-            friends = user[0].attributes.friendsList
+        var userIdPointer = {
+            __type: 'Pointer',
+            className: '_User',
+            objectId: userId
         }
-        else if (user[1].attributes.username === username){
-            friends = user[1].attributes.friendsList
+        var friendIdPointer = {
+            __type: 'Pointer',
+            className: '_User',
+            objectId: userTest.id
         }
-    }
+    
+        query.equalTo("friend", userIdPointer)
+        query.equalTo("user", friendIdPointer)
+        let friendTest = await query.first()
 
-    if (typeof friends !== 'undefined') {
-        friends.push(friend)
-        console.log("hehehehe")
+        // add query testing if user exists with that username
+
+        if (typeof friendTest === 'undefined'){   
+            console.log("Friend Test")
+            console.log(friendTest)
+            console.log(typeof friendTest)
+
+            friend.set("user", userIdPointer)
+            friend.set("friend", friendIdPointer)
+            
+            friend2.set("user", friendIdPointer)
+            friend2.set("friend", userIdPointer)
+
+            friend2.save();
+            return friend.save().then((result) => {
+                return result;
+            });
+        }
+        else {
+            alert("User is already your friend")
+        }
     }
     else {
-        friends = [friend]
-        console.log("hahahaha")
+        alert("User does not exist")
     }
-    
-    console.log("friends")
-    console.log(friends)
-    currentUser.set("friendsList", friends);
-    
-    return currentUser.save().then((result) => {
-        return result;
-    });
   };
