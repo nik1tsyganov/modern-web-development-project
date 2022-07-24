@@ -1,5 +1,6 @@
 import Parse from 'parse';
 
+// fetches responses for testing
   export const TestResponse = (category) => {
 
     var currentUser = Parse.User.current();
@@ -12,6 +13,9 @@ import Parse from 'parse';
     query.equalTo('category', category);
 
     return query.first().then((results) => {
+      if (results){
+        results.destroy({})
         return results;
+      }    
 });
 };

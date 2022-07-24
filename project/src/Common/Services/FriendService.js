@@ -1,5 +1,6 @@
 import Parse from 'parse';
 
+// pulls friend objects associated with current user
 export const getFriend = () => {
 
     var currentUser = Parse.User.current();
@@ -21,21 +22,3 @@ export const getFriend = () => {
 });
 
 };
-
-// A - NHPDJYZeX9
-// N - Dz2myzh6Xz
-// B - M8HBPRJskv
-
-// import Parse from 'parse';
-
-// export const getFriend = (friendUserName) => {
-
-//     const testResponse = Parse.Object.extend("User");
-
-//     const query = new Parse.Query(testResponse);
-
-//     query.equalTo('username', friendUserName);
-
-//     return query.first().then((result) => {
-//         return result;
-// });

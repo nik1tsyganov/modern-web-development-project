@@ -1,7 +1,7 @@
 import Parse from 'parse';
 
+// updates user high score
 export const UpdateScore = (score) => {
-    // This is so that the Creating: ... is displayed in the console and the user can see his/her input is recorded
 
     var currentUser = Parse.User.current();
 
@@ -9,7 +9,6 @@ export const UpdateScore = (score) => {
     console.log(currentUser.attributes.score)
 
     if (score > currentUser.attributes.score || typeof currentUser.attributes.score !== 'undefined'){
-        // console.log("WEEEEEE")
 
         currentUser.set("score", score);
         currentUser.save();

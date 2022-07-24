@@ -15,60 +15,42 @@ const ScoreView = () => {
 
         useEffect(() => {
     
+            // calls and returns promises from service calls for each category
             Promise.all([TestResponse("authors"), TestResponse("artists"), TestResponse("historicals")]).then((results) => {
-                console.log(results)
 
+                if (typeof results[0] !== "undefined") {
+                    // filters user response objects into categories
+                    let artistsScore = results.filter(result => result.attributes.category === "artists")
+                    let authorsScore = results.filter(result => result.attributes.category === "authors")
+                    let historicalsScore = results.filter(result => result.attributes.category === "historicals")
 
-                let artistsScore = results.filter(result => result.attributes.category === "artists")
-                let authorsScore = results.filter(result => result.attributes.category === "authors")
-                let historicalsScore = results.filter(result => result.attributes.category === "historicals")
+                    // calculates user score
+                    let scoreTot = 0;
+                    if (artistsScore[0].attributes.response === "Vincent Van Gogh"){
+                        scoreTot += 1;
+                    }
+                    if (authorsScore[0].attributes.response === "Hunter S. Thompson"){
+                        scoreTot += 1;
+                    }
+                    if (historicalsScore[0].attributes.response === "Agamemnon"){
+                        scoreTot += 1;
+                    }
 
-                let scoreTot = 0;
-                if (artistsScore[0].attributes.response === "Vincent Van Gogh"){
-                    scoreTot += 1;
+                    setScore(scoreTot)
+
+                    // calls service to update user score
+                    UpdateScore(scoreTot).then((result) => {
+                        console.log(result)
+                    });
+
+                    // calls service to create new user score object
+                    return createUserScore(scoreTot).then((userScore) => {
+                        return userScore
+                    });
                 }
-                if (authorsScore[0].attributes.response === "Hunter S. Thompson"){
-                    scoreTot += 1;
-                }
-                if (historicalsScore[0].attributes.response === "Agamemnon"){
-                    scoreTot += 1;
-                }
-
-                setScore(scoreTot)
-
-                console.log("scoreTot")
-                console.log(scoreTot)
-
-                UpdateScore(scoreTot).then((result) => {
-                    console.log(result)
-                });
-
-                return createUserScore(scoreTot).then((userScore) => {
-                    console.log("userScore")
-                    console.log(userScore)
-                    return userScore
-                });
             });
     
         }, []);
-      
-    
-        // useEffect(() => {
-        //     //console.log("heeby")
-        //     //console.log(scores)
-        //     let sum = 0
-    
-        //     for (let i = 0; i < 
-        //         scores.length; i += 1) {
-        //         sum += scores[i]
-        //     }
-    
-        //     setScoreTot([scoreTot, sum])
-    
-        //     createUserScore().then((result) => {
-        //         console.log(result)
-        //   });
-        // }, [scores]);
       
         return (
         <div>

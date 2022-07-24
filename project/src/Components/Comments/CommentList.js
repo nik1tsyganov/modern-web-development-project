@@ -14,13 +14,14 @@ import Parse from "parse";
 
 const Comments = () => {
 
-    const [backendComments, setBackendComments] = useState([]);
+    // The following state variables keep track of global and root comments in addition to words used in search / filtering
+    const [comments, setComments] = useState([]);
     const [activeComment, setActiveComment] = useState(null);
-    const rootComments = backendComments.filter(
-        (backendComment) => {
-            if (backendComment.attributes  !== undefined) {
-                if (backendComment.attributes.parentId === null)
-                    return backendComment;
+    const rootComments = comments.filter(
+        (comment) => {
+            if (comment.attributes  !== undefined) {
+                if (comment.attributes.parentId === null)
+                    return comment;
             }
         });
     const [usersForMention, setUsersForMention] = useState([]);
@@ -28,6 +29,7 @@ const Comments = () => {
     const [searchFlag, setSearchFlag] = useState(false);
     const [filteredIds, setFilteredIds] = useState([]);
 
+    // We are getting the current user and if he/she isn't logged in we set it to defeault
     var currentUser;
     if (Parse.User.current() !== null) {
         currentUser = Parse.User.current();
@@ -35,12 +37,13 @@ const Comments = () => {
         currentUser = {id: "0", attributes: {username: "Guest"}};
     }
 
+    // Function allows to get replies to the so called root comment and sort them by created date and time
     const getReplies = (commentId) =>
-        backendComments
-        .filter((backendComment) =>  {
-            if (backendComment.attributes !== undefined) {
-                if (backendComment.attributes.parentId === commentId) {
-                    return backendComment;
+        comments
+        .filter((comment) => {
+            if (comment.attributes !== undefined) {
+                if (comment.attributes.parentId === commentId) {
+                    return comment;
                 }
             }
         })
@@ -48,77 +51,91 @@ const Comments = () => {
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
 
+    // Function allows to add comments at the end of the state variable comments and uses the comments services
+    // the last comment which was just created is added at the end 
     const addComment = (text, userId, parentId, username) => {
         createCommentService(text, userId, parentId, username).then((comment) => {
-        setBackendComments([comment, ...backendComments]);
+        setComments([...comments, comment]);
         setActiveComment(null);
         });
     };
 
+    // The editted comment is updated in place using the desired id of the object and new text
+    // the comment object is changed in place so the order isn't messed up when rendered on the main page
     const updateComment = (commentId, text) => {
-        updateCommentService(commentId, text).then((comment) => {
-            const updatedBackendComments = backendComments.filter(
-                (backendComment) => backendComment.id !== comment.id
-            );
-            setBackendComments([comment, ...updatedBackendComments]);
+        updateCommentService(commentId, text).then((updatedComment) => {
+            const updatedComments = comments.map(
+                (comment) => {
+                    if (comment.id === updatedComment.id) {
+                        return updatedComment;
+                    }
+                    return comment;
+                });
+            setComments(updatedComments);
             setActiveComment(null);
         });
     };
 
+    // Here we destroy the comment object and update the state array of comments to ommit the deleted one
     const deleteComment = (commentId) => {
         if (window.confirm("Are you sure you want to remove comment?")) {
-            deleteCommentService(commentId).then((result) => {
-                const updatedBackendComments = backendComments.filter(
-                (backendComment) => backendComment.id !== result.id
+            deleteCommentService(commentId).then((deletedComment) => {
+                const updatedComments = comments.filter(
+                (comment) => comment.id !== deletedComment.id
                 );
-                setBackendComments(updatedBackendComments);
+                setComments(updatedComments);
                 setActiveComment(null);
             });
         }
     };
 
+    // This is technically not redux but when initially coded we used the redux library
+    // the word the user is looking for is compared to the body of each comment and the ones matching are displayed
     const reduxCommentSearch = (word) => {
         var filteredCommentsIds = [];
-        backendComments
-        .filter((backendComment) =>  {
-            if (backendComment.attributes !== undefined) {
-                if (containsWord(backendComment.attributes.body, word) === true) {
-                    filteredCommentsIds.push(backendComment.id);
-                    return backendComment;
+        comments
+        .filter((comment) =>  {
+            if (comment.attributes !== undefined) {
+                if (containsWord(comment.attributes.body, word) === true) {
+                    filteredCommentsIds.push(comment.id);
+                    return comment;
                 }
             }
         })
+        // We update the Ids array as a state variable for each new search 
         setFilteredIds(filteredCommentsIds);
         setSearchFlag(false);
     }
 
+    // Handles the click of the submit button on the search form and sets the flag 
     const onClickHandler = (e) => {
         e.preventDefault();
         setSearchFlag(true);
       };
   
+    // This changes the search word and sets its state variable
     const onChangeHandler = (e) => {
         e.preventDefault();
         setReduxWord(e.target.value);
     };
 
+    // Updates the comments array of objects to display the correct list of comments
     useEffect(() => {
         getCommentsService().then((data) => {
-            setBackendComments(data);
+            setComments(data);
         });
+        // Gets all the required user data for the mentions object creation with "id" and "display"
         getUsername().then((results) => {
-            var users = [];
-            for (let i = 0; i < results.length; i++) {
-                var dict = {};
-                dict["id"] = results[i].attributes.username;
-                dict["display"] = results[i].attributes.firstName;
-                users.push(dict);
-            }
+            var users = results.map((result) => {
+                return {id: result.attributes.username, display: result.attributes.firstName}
+            });
             setUsersForMention(users);
         })
+        // Checks if the search flag is true to start comment filtering
         if (searchFlag) {
             reduxCommentSearch(reduxWord);
         }
+        // If the word is "" it will reset the Ids and display all comments
         if (reduxWord === "") {
             setFilteredIds([]);
         }
@@ -126,13 +143,22 @@ const Comments = () => {
     
     return (
         <div className="comments">
-            <h3 className="comments-space-title">Search the comment space</h3>
+            {/* The Search Form */}
+            <h3 className="comments-search-title">Search the comment space</h3>
             <SearchForm onSubmitForm={onClickHandler} onChangeForm={onChangeHandler} />
             <br />
+            {/* Comment form is created to set the comments and get the textarea value including the mentions */}
             <h3 className="comments-title">Comments</h3>
-            <div className="comment-form-title">Write comment</div>
-            <CommentForm submitLabel="Write" usersForMention={usersForMention} currentUser={currentUser} handleSubmit={addComment} />
-            <div className="comments-container">
+            <div className="comments-submit-title">Write comment</div>
+            <CommentForm 
+                submitLabel="Comment" 
+                usersForMention={usersForMention} 
+                currentUser={currentUser} 
+                handleSubmit={(text) => addComment(text, currentUser.id, null, currentUser.attributes.username)} 
+            />
+            <div className="comments-start-of-list">
+                {/* The root comments are filtered and displayed depending on which Ids were selected by the search function */}
+                {/* Else nothing is displayed or everything is if the search word is empty */}
                 {rootComments.map((rootComment) => (
                     (filteredIds.includes(rootComment.id) || (reduxWord === "")) ? 
                     <Comment
@@ -146,11 +172,9 @@ const Comments = () => {
                         updateComment={updateComment}
                         deleteComment={deleteComment}
                         addComment={addComment}
-                        parentId={rootComment.id}
                         getReplies={getReplies}
                         replies={getReplies(rootComment.id)}
                         usersForMention={usersForMention}
-                        currentUserId={currentUser.id}
                     /> : <div></div>
                 ))}
             </div>
